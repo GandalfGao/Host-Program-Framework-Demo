@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--配置-->
+<config>
+	<!--plc配置(如需与多个plc通讯, 即设置多个plcConfig节点)-->
+	<!--主线PLC-->
+	<plcConfig name="MainLinePlcConfig"> <!--name属性名称与Config类下的属性名称必须保持一致-->
+		<!--plc设备配置 (type: plc类型; slot: 槽号; rack: 机架号)-->
+		<plcEquip type="1" ip="192.168.1.1" port="" slot="" rack="" />
+		<!--plc地址配置-->
+		<plcAddrs>
+			<!--依据业务所需, 设置节点名称以及地址信息-->
+			<!--业务需求: 启动主线输送-->
+			<startLineAddr>DB100.DBX0.0</startLineAddr>
+			<!--业务需求: 停止主线输送-->
+			<stopLineAddr>DB100.DBX0.1</stopLineAddr>
+		</plcAddrs>
+	</plcConfig>
+	<!--辅线PLC-->
+	<plcConfig name="DoorLinePlcConfig"> <!--name属性名称与Config类下的属性名称必须保持一致-->
+		<!--plc设备配置 (type: plc类型; slot: 槽号; rack: 机架号)-->
+		<plcEquip type="2" ip="192.168.1.2" port="" slot="" rack="" />
+		<!--plc地址配置-->
+		<plcAddrs>
+			<!--依据业务所需, 设置节点名称以及地址信息-->
+			<!--业务需求: 复位辅线的报警状态-->
+			<resetAlarmAddr>DB50.DBX0.0</resetAlarmAddr>
+			<!--业务需求: 是否处于自动模式-->
+			<isAutoModeAddr>DB60.DBX0.0</isAutoModeAddr>
+		</plcAddrs>
+	</plcConfig>
+	<!--设备串口通讯配置 (portName: 端口号; baudRate: 波特率; parity: 奇偶校验位; dataBits: 数据位; stopBits: 停止位)(如需多个串口, 即设置多个serialPortConfig节点)-->
+	<!--电阻仪, name属性名称与Config类下的属性名称必须保持一致-->
+	<serialPortConfig name="OhmmeterSpConfig" portName="COM7" baudRate="115200" parity="0" dataBits="8" stopBits="1" />
+	<!--扫码枪, name属性名称与Config类下的属性名称必须保持一致-->
+	<serialPortConfig name="ScannerSpConfig" portName="COM9" baudRate="115200" parity="0" dataBits="8" stopBits="1" />
+</config>
