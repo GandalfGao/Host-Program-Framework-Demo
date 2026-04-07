@@ -18,43 +18,68 @@
 
 ### 数据层
 
-#### 数据库数据访问层
+#### 与数据库交互的数据访问层（DataAccess）
 
 与MVC的Model层基本上是一样的。不过该架构demo使用的访问数据库的框架是ado.net，如果需要EntityFramework等其他数据库框架请酌情参考
 
 因此设计DataAccess文件夹，负责处理与数据库之间交互的程序
 
+**该层中又细分如下三个部分**
 
-#### 硬件设备数据访问层
+##### Entities
 
-上位机与web不同
+负责存放与表相映射的实体类
 
-### 数据层
+##### Repositories
 
-安装教程
+负责存放操作数据表的程序，如需要对User表进行增删改查，那就设计一个UserRepository类，在该类中实现增删改查的程序，对其他表也是同理。如果涉及到多表联查的话，那就确定哪个表是主表，并将查询程序放到与主表相关的Repository类中，如User表为主表，就放到UserRepository类
 
-1. xxxx
-2. xxxx
-3. xxxx
+##### DbConnectionHelper
 
-#### 使用说明
+创建数据库连接对象
 
-1. xxxx
-2. xxxx
-3. xxxx
+#### 与硬件设备交互的数据访问层（HardwareAccess）
 
-#### 参与贡献
+上位机与web不同，需要与硬件做通讯，因此该层是负责处理与硬件交互逻辑的
 
-1. Fork 本仓库
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
+因此设计HardwareAccess文件夹，负责处理与硬件之间的交互的程序
 
-#### 特技
+##### 对与硬件设备交互的数据访问层如何进行细致的划分
 
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5. Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6. Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+结合现场实际需求，了解需要交互的硬件种类有哪些，并在HardwareAccess文件下设置与之相关的文件夹。例如，此demo程序中需要交互的硬件设备类型有三种，分别是电阻仪、plc和扫码枪，因此就设置三个文件夹：“Ohmmeters”，负责存放电阻仪交互程序、“Plcs”，负责存放plc交互程序、“Scanners”，负责存放扫码枪交互程序。
+
+##### 硬件交互的操作类如何命名
+
+如果当前设备类型下仅有一台，其命名规则是：硬件设备的英文名称 + Operator，如plc的就是 “PlcOperator”，电阻仪的就是“OhmmeterOperator”
+
+如果当前设备类型下有两台或两台以上的设备（一般情况下较少），其命名规则：该设备在产线中承担的职责 + 硬件设备的英文名称 + Operator，例如产线中有两个plc，一个是主线plc，另一个是辅线plc，二者承担的职责不同，因此主线的plc命名为“MainLinePlcOperator”，辅线的plc命名为“DoorLinePlcOperator”
+
+##### 类中方法如何设计
+
+请结合实际的业务需求来设计相应的函数。
+
+例如，主线plc中有控制主线输送和主线输送状态这两个操作，那就照此设计两个函数：“SetLineState”，控制主线输送、“GetLineState”，获取主线输送状态
+
+##### 为什么不设计一个比较公共的类以此来复用呢？
+
+因为负责与硬件通讯的第三方工具包已经把这个做了，而且做的已经非常好了，各位再实现无非就是给它套了个壳子，试问这样做的意义在哪里呢？
+
+##### ConnectionHelper类
+
+根据与硬件通讯的实际方式，来设计相应的ConnectionHelper类，直接放在HardwareAccess文件夹下即可，如plc通讯，设置“PlcConnectionHelper”类（plc特殊一点，所以单独设置一个），如串口通讯，设置“SerialPortConnectionHelper”类，如果是tcp通讯，也是同理
+
+#### Utils
+
+Utils负责存放一些公共的工具程序，以供Form层和数据层方便调用，其内部划分方式也是结合实际需求来定
+
+#### Dtos
+
+负责存放数据传输对象，建议在查询时，不要把从数据库中查询的数据直接显示，而是查询之后的实体转化成dto，由dto传给界面显示，编辑数据也是如此，编辑之后生成的dto转化为实体，再编辑到数据库中，至于Dto是什么，可以上网进行查阅，已经有很多博主解释的很详细了，这里不再赘述了
+
+## 💡 小贴士
+
+写码不易，如果这个项目对你有帮助，欢迎请我喝杯咖啡☕️
+
+相关图片存放在：`/images/misc/`（点进去看看就懂了～量力而行，不勉强）
+
+感谢每一位朋友，你的鼓励是我持续分享的动力。

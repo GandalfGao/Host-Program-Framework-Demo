@@ -263,6 +263,8 @@
     <Content Include="Images\minus.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\misc\misc1.jpg" />
+    <Content Include="Images\misc\misc2.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />
