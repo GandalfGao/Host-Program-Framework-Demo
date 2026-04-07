@@ -10,6 +10,7 @@ The design of this program architecture draws on the ideas of MVC, but due to th
 
 ### Directory Structure
 
+```
 WinformAppDemo/
 ├── DataAccess/ # Database interaction
 │ ├── Entities/ # Entity classes
@@ -31,7 +32,7 @@ WinformAppDemo/
 ├── MainForm.cs
 ├── packages.config
 └── Program.cs
-
+```
 
 ### Form Layer
 

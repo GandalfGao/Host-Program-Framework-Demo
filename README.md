@@ -10,8 +10,9 @@
 
 ### 目录结构
 
+```
 WinformAppDemo/
-├── DataAccess/ # 数据库交互 <br />
+├── DataAccess/ # 数据库交互
 │   ├── Entities/ # 实体类
 │   ├── Repositories/ # 仓储类
 │   └── DbConnectionHelper.cs
@@ -31,6 +32,7 @@ WinformAppDemo/
 ├── MainForm.cs
 ├── packages.config
 └── Program.cs
+```
 
 ### Form层
 
